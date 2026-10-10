@@ -35,4 +35,30 @@ object ApiClient {
             .build()
             .create(AuthService::class.java)
     }
+
+    fun createChatService(tokenManager: TokenManager): ChatService {
+        val authInterceptor = Interceptor { chain ->
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+            
+            tokenManager.getToken()?.let { token ->
+                requestBuilder.header("Authorization", "Bearer $token")
+            }
+            
+            chain.proceed(requestBuilder.build())
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ChatService::class.java)
+    }
 }
