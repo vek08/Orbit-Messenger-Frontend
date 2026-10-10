@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.orbitmessenger.frontend.app-debug-52:/xml_data_extraction_rules.xml.flat",
+        "source": "com.orbitmessenger.frontend.app-main-54:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.orbitmessenger.frontend.app-debug-52:/xml_backup_rules.xml.flat",
+        "source": "com.orbitmessenger.frontend.app-main-54:/xml/backup_rules.xml"
+    }
+]
